@@ -281,7 +281,7 @@ function selectOption(i: number) {
   if (o.give) addItem(o.give);
   if (o.contact) {
     showExhibit('Get in touch',
-      'Angel Jaime — Product Leader. AI, Fintech, Travel, Marketplaces. Ten years, four countries, big tech to zero-to-one and back. Thanks for touring the building.',
+      'Angel Jaime — Product Leader. AI, Fintech, Travel, Marketplaces. 13+ years in product, 15+ in tech, across four countries. Thanks for touring the building.',
       [
         { url: 'https://angeljaime.com', label: 'angeljaime.com' },
         { url: 'mailto:angeljaimer@gmail.com', label: 'Email' },

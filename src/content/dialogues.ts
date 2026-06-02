@@ -121,7 +121,7 @@ export const ANGEL_DIALOGUE: Dialogue = {
     ],
   },
   why: {
-    npc: "Ten years, four countries, AI to fintech to travel. I've built zero-to-one and scaled one-to-millions. I hire well, I ship, and I sweat the user. The rest is detail.",
+    npc: "Thirteen years in product, fifteen in tech, four countries, AI to fintech to travel. I've built zero-to-one and scaled one-to-millions. I hire well, I ship, and I sweat the user. The rest is detail.",
     options: [
       { text: 'What are you after?', to: 'want' },
       { text: "Let's talk.", to: 'end', contact: true },

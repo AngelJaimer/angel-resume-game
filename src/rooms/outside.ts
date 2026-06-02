@@ -146,7 +146,7 @@ const HOTSPOTS: Hotspot[] = [
     ],
     look: "Triathlon. When I'm not shipping product, I race long-course triathlon. I completed the Patagonman, an extreme triathlon at the end of the world in Patagonia and one of the toughest on the planet. Product leadership is an endurance sport too." },
   { id: 'tree', name: 'the tree', x: 104, y: 48, w: 40, h: 60, walkTo: { x: 130, y: 138 },
-    look: 'A good tree. Ten years across four countries, and the roots are still in Barcelona.' },
+    look: 'A good tree. Fifteen years in tech across four countries, and the roots are still in Barcelona.' },
 ];
 
 const EXITS: Exit[] = [

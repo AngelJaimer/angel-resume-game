@@ -68,7 +68,7 @@ export function rooftopOverlays(ctx: CanvasRenderingContext2D, t: number) {
 
 const HOTSPOTS: Hotspot[] = [
   { id: 'view', name: 'the view', x: 40, y: 30, w: 220, h: 60, walkTo: { x: 150, y: 138 },
-    look: 'The whole city at dusk. Ten years, four countries, big tech to zero-to-one and back. The throughline: take fuzzy, high-stakes problems and ship products that move real numbers.' },
+    look: 'The whole city at dusk. Thirteen years in product, fifteen in tech, four countries, big tech to zero-to-one and back. The throughline: take fuzzy, high-stakes problems and ship products that move real numbers.' },
   { id: 'chairs', name: 'the chairs', x: 148, y: 92, w: 40, h: 14, walkTo: { x: 168, y: 138 },
     look: 'Two chairs and a good view. Pull one up.' },
 ];
