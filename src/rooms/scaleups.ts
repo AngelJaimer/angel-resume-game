@@ -29,7 +29,7 @@ export function buildScaleupsScene(): HTMLCanvasElement {
 }
 
 const HOTSPOTS: Hotspot[] = [
-  { id: 'revolut', name: 'Revolut', x: 44, y: 28, w: 64, h: 44, walkTo: { x: 72, y: 138 },
+  { id: 'revolut', name: 'Revolut', x: 44, y: 28, w: 64, h: 44, walkTo: { x: 72, y: 138 }, url: 'https://angeljaime.com/case-study/revolut',
     look: 'Revolut, London. Senior Product Owner for Revolut Business. I launched and scaled a Rewards platform across web, iOS and Android, shipped cross-product referrals (consumer to business), and created Revolut Points, later rolled out to Consumer. Two teams, twenty-plus people.' },
   { id: 'hopper', name: 'Hopper', x: 120, y: 28, w: 64, h: 44, walkTo: { x: 148, y: 138 },
     look: 'Hopper, NY and LA. Senior PM, International Expansion. I led international Hotels and Fintech: doubled conversion on some fintech products, launched a travel-rewards program, and powered partnerships putting Hopper inventory inside NuBank, SMCC and Lloyds.' },

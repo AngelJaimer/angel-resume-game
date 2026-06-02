@@ -24,7 +24,7 @@ export function buildBigtechScene(): HTMLCanvasElement {
 }
 
 const HOTSPOTS: Hotspot[] = [
-  { id: 'booking', name: 'Booking.com', x: 40, y: 28, w: 60, h: 44, walkTo: { x: 66, y: 138 },
+  { id: 'booking', name: 'Booking.com', x: 40, y: 28, w: 60, h: 44, walkTo: { x: 66, y: 138 }, url: 'https://angeljaime.com/case-study/pulse',
     look: 'Booking.com, Amsterdam. From operations to Product Owner. I built Pulse, the partner app, from a sketch to over a million users at 4.5 stars. Later I validated a brand-new Transport vertical with the CPO and launched Booking\'s first public-transport product.' },
   { id: 'justeat', name: 'Just Eat', x: 116, y: 28, w: 56, h: 44, walkTo: { x: 142, y: 138 },
     look: 'Just Eat, London. Senior PM owning Search across web and apps. I ran ranking and the search experience, drove an experimentation culture of hundreds of A/B tests, and co-authored a published paper on the ranking algorithm.' },

@@ -6,6 +6,8 @@ export interface Hotspot {
   x: number; y: number; w: number; h: number;
   walkTo: { x: number; y: number };
   look: string;
+  url?: string;             // external link (e.g. a case study) shown as a clickable HTML pill
+  linkLabel?: string;       // label for that pill (defaults to the hotspot name)
   responses?: Record<string, string>;
   pickup?: { id: string; name: string };
   pickupIf?: string;        // only collectable once this flag is set

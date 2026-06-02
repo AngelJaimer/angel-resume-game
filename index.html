@@ -12,6 +12,9 @@
     <meta name="theme-color" content="#171412" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="apple-touch-icon" href="icon-180.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
     <title>Angel Jaime · The Playable Résumé</title>
     <style>
       html, body {
@@ -44,6 +47,38 @@
       #pwahint.show { display: block; }
       #pwahint b { color: #f5c84a; }
       #pwahint .x { position: absolute; right: 6px; top: 5px; padding: 3px 9px; font-size: 16px; cursor: pointer; color: #c9b88a; }
+
+      /* ---- external link layer (real HTML links over the canvas) ---- */
+      #ui { position: fixed; top: 10px; right: 10px; z-index: 30; display: none; gap: 8px; align-items: center; }
+      .pill {
+        display: inline-flex; align-items: center; gap: 4px; cursor: pointer;
+        background: rgba(23, 20, 18, 0.82); color: #f3e9d6; border: 1px solid #5a4a32;
+        border-radius: 999px; padding: 6px 12px; font: 600 12px/1 'Inter', system-ui, sans-serif;
+        text-decoration: none; letter-spacing: 0.01em;
+      }
+      .pill:hover { background: rgba(40, 32, 18, 0.96); border-color: #d4a800; color: #ffd86a; }
+      .pillhot { background: rgba(154, 114, 0, 0.92); color: #1a1410; border-color: #ffd86a; }
+      .pillhot:hover { background: #d4a800; color: #1a1410; }
+      .pillcenter { position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 31; }
+      #uiContact { position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 31; display: none; gap: 8px; }
+      /* one-view overview modal */
+      #overview { position: fixed; inset: 0; z-index: 40; display: none; align-items: center; justify-content: center; background: rgba(8, 6, 10, 0.78); padding: 16px; }
+      #overview .card {
+        background: #f9f6f0; color: #171412; max-width: 560px; width: 100%; max-height: 86vh; overflow: auto;
+        border-radius: 12px; padding: 26px 28px 24px; position: relative;
+        font-family: 'Inter', system-ui, sans-serif; box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+      }
+      #overview h1 { font-family: 'Spectral', Georgia, serif; font-size: 30px; margin: 0 0 2px; letter-spacing: -0.02em; }
+      #overview .sub { color: #9a7200; font-weight: 700; font-size: 12px; margin: 0 0 16px; text-transform: uppercase; letter-spacing: 0.1em; }
+      #overview p { line-height: 1.55; font-size: 14px; margin: 0 0 14px; color: #2b2622; }
+      #overview ul { margin: 0 0 16px; padding-left: 18px; }
+      #overview li { line-height: 1.5; font-size: 13.5px; margin-bottom: 6px; color: #2b2622; }
+      #overview b { color: #171412; }
+      #overview .links { display: flex; flex-wrap: wrap; gap: 9px; }
+      #overview .links a { background: #171412; color: #f9f6f0; text-decoration: none; padding: 9px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; }
+      #overview .links a.amber { background: #d4a800; color: #171412; }
+      #overview .links a:hover { opacity: 0.9; }
+      #overview .x { position: absolute; top: 10px; right: 14px; border: none; background: none; font-size: 22px; cursor: pointer; color: #9a8c70; line-height: 1; }
     </style>
   </head>
   <body>
@@ -57,6 +92,38 @@
     <div id="pwahint">
       📲 For <b>fullscreen</b>: tap <b>Share</b>, then <b>Add to Home Screen</b>, and open it from the icon.
       <span class="x" id="pwahintx">✕</span>
+    </div>
+    <!-- external link layer (controlled by src/ui/links.ts) -->
+    <div id="ui">
+      <a id="uiSite" class="pill" href="https://angeljaime.com" target="_blank" rel="noopener">angeljaime.com ↗</a>
+      <button id="uiOverview" class="pill" type="button">Overview</button>
+    </div>
+    <a id="uiCase" class="pill pillhot pillcenter" href="#" target="_blank" rel="noopener" style="display:none"></a>
+    <div id="uiContact">
+      <a class="pill" href="https://angeljaime.com" target="_blank" rel="noopener">angeljaime.com ↗</a>
+      <a class="pill" href="mailto:angeljaimer@gmail.com">Email ↗</a>
+      <a class="pill" href="https://www.linkedin.com/in/angel-jaime-3054b632/" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+    <div id="overview">
+      <div class="card">
+        <button id="ovClose" class="x" type="button" aria-label="Close">✕</button>
+        <h1>Angel Jaime</h1>
+        <div class="sub">Product Leader · AI · Fintech · Travel</div>
+        <p>10+ years building and scaling products — from operations at Booking.com to Staff PM for AI at Engine. This is the one-screen version; the building has the full tour.</p>
+        <ul>
+          <li><b>AI &amp; Now —</b> Engine: central AI platform, smart search, ML personalization.</li>
+          <li><b>Scale-ups —</b> Revolut (Rewards, Revolut Points) and Hopper (international expansion).</li>
+          <li><b>Startup —</b> Yayzy: climate-fintech, CPO, 0→1 (Apple App of the Day, 30+ countries).</li>
+          <li><b>Big Tech —</b> Booking.com (Pulse, 1M+ users), Just Eat (Search, a published paper), Philips.</li>
+          <li><b>Education —</b> Executive MBA, MSc Business Intelligence, Barcelona.</li>
+          <li><b>Off the clock —</b> newsletters, teaching, indie games, and Henry.</li>
+        </ul>
+        <div class="links">
+          <a class="amber" href="https://angeljaime.com" target="_blank" rel="noopener">Visit angeljaime.com ↗</a>
+          <a href="https://www.linkedin.com/in/angel-jaime-3054b632/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="mailto:angeljaimer@gmail.com">Email</a>
+        </div>
+      </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>

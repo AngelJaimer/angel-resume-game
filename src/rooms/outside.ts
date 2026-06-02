@@ -70,11 +70,11 @@ export function buildOutsideScene(): HTMLCanvasElement {
 }
 
 const HOTSPOTS: Hotspot[] = [
-  { id: 'newsstand', name: 'the newsstand', x: 196, y: 58, w: 40, h: 46, walkTo: { x: 210, y: 138 },
+  { id: 'newsstand', name: 'the newsstand', x: 196, y: 58, w: 40, h: 46, walkTo: { x: 210, y: 138 }, url: 'https://angeljaime.com/writing', linkLabel: 'Read the writing',
     look: 'Writing and teaching. I write a product newsletter (El Producto, over a thousand weekly readers) and Week in Product, and I coach and teach PMs at Mento, Product School and EADA.' },
-  { id: 'arcade', name: 'the arcade cabinet', x: 250, y: 60, w: 26, h: 44, walkTo: { x: 263, y: 138 },
+  { id: 'arcade', name: 'the arcade cabinet', x: 250, y: 60, w: 26, h: 44, walkTo: { x: 263, y: 138 }, url: 'https://angeljaimer.github.io/montjuic-game/', linkLabel: 'Play the game',
     look: 'I build tiny point-and-click adventures for fun: El Secreto de Montjuic and Martohell. And, well, this resume is one of them.' },
-  { id: 'stroller', name: 'the stroller', x: 288, y: 86, w: 24, h: 20, walkTo: { x: 298, y: 138 },
+  { id: 'stroller', name: 'the stroller', x: 288, y: 86, w: 24, h: 20, walkTo: { x: 298, y: 138 }, url: 'https://angeljaime.com/case-study/henry',
     look: 'Henry. My most important launch of 2026. I am also building him an app to track the newborn chaos. Currently in production. Sleep is the main bug.' },
   { id: 'bench', name: 'the bench', x: 148, y: 94, w: 34, h: 16, walkTo: { x: 165, y: 138 },
     look: 'A quiet bench in the sun. Angel investing happens here too: a small portfolio in fintech, edtech and climate-tech.' },

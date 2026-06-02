@@ -38,7 +38,7 @@ export function buildStartupScene(): HTMLCanvasElement {
 }
 
 const HOTSPOTS: Hotspot[] = [
-  { id: 'yayzy', name: 'Yayzy', x: 50, y: 26, w: 92, h: 50, walkTo: { x: 90, y: 138 },
+  { id: 'yayzy', name: 'Yayzy', x: 50, y: 26, w: 92, h: 50, walkTo: { x: 90, y: 138 }, url: 'https://angeljaime.com/case-study/yayzy',
     look: 'Yayzy, London and LA. Chief Product Officer. Climate-fintech, zero to one. We calculated carbon emissions straight from bank data via Open Banking, and shipped a B2C app plus B2B APIs. Over 20k organic downloads, Apple App of the Day, a Product Hunt award, BBC coverage, live in 30-plus countries. I hired the first senior product, engineering and design.' },
   { id: 'whiteboard', name: 'the whiteboard', x: 160, y: 24, w: 90, h: 54, walkTo: { x: 200, y: 138 },
     look: 'Zero-to-one means wearing every hat: company strategy in the morning, hiring at noon, support tickets after lunch, and shipping something real on Friday.' },

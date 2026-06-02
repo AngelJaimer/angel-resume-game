@@ -11,6 +11,7 @@ export interface Opt {
   once?: boolean;
   card?: string[];
   goto?: string;
+  contact?: boolean; // reveal the finale contact links (site / email / LinkedIn)
 }
 export interface DialogueNode {
   npc: string;
@@ -23,8 +24,10 @@ const CARD = [
   'GET IN TOUCH', '',
   'Angel Jaime - Product Leader',
   'AI · Fintech · Travel · Marketplaces', '',
+  'angeljaime.com',
   'angeljaimer@gmail.com',
   'linkedin.com/in/angel-jaime-3054b632', '',
+  'The links up top are clickable.',
   'Thanks for touring the building.',
 ];
 
@@ -62,29 +65,29 @@ export const CONCIERGE_DIALOGUE: Dialogue = {
 // ---- Scale-ups: a growth PM ----
 export const SCALEUPS_DIALOGUE: Dialogue = {
   start: {
-    npc: "Scale-up life: everything's on fire, in a good way. Angel ran Rewards and Referrals here. Revolut Points started on this floor.",
+    npc: "I designed alongside Angel on Revolut Business. Scale-up life: everything's on fire, in a good way. He ran Rewards and Referrals - Revolut Points started right here on this floor.",
     options: [
-      { text: 'What was the hard part?', to: 'hard' },
+      { text: 'What was he like to work with?', to: 'hard' },
       { text: '(Leave)', to: 'end' },
     ],
   },
   hard: {
-    npc: 'Shipping fast without breaking trust. He line-managed twenty-odd people across two teams and still sweated the details.',
-    options: [{ text: 'Nice.', to: 'end' }],
+    npc: 'Decisive, but he listened. He line-managed twenty-odd of us across two teams, shipped fast, and still caught the details the rest of us missed.',
+    options: [{ text: 'Good to know.', to: 'end' }],
   },
 };
 
 // ---- Startup: the founder ----
 export const STARTUP_DIALOGUE: Dialogue = {
   start: {
-    npc: 'Welcome to the startup floor. Yayzy — we measured your carbon footprint straight from your bank data. Tiny team, enormous ambition.',
+    npc: 'I was one of the first hires at Yayzy - Angel hired me himself. We measured your carbon footprint straight from your bank data. Tiny team, enormous ambition.',
     options: [
-      { text: 'How did it go?', to: 'go' },
+      { text: 'What was he like as CPO?', to: 'go' },
       { text: '(Leave)', to: 'end' },
     ],
   },
   go: {
-    npc: 'Apple App of the Day, a Product Hunt award, the BBC, thirty-plus countries. Angel was CPO: strategy one minute, hiring the next, support tickets after lunch.',
+    npc: 'He wore every hat: company strategy one minute, interviewing me the next, answering support tickets after lunch. We hit Apple App of the Day, a Product Hunt award, the BBC, thirty-plus countries.',
     options: [{ text: 'Respect.', to: 'end' }],
   },
 };
@@ -92,14 +95,14 @@ export const STARTUP_DIALOGUE: Dialogue = {
 // ---- Big Tech: a seasoned PM ----
 export const BIGTECH_DIALOGUE: Dialogue = {
   start: {
-    npc: 'The big leagues: Booking, Just Eat, Philips. This is where Angel learned to ship at scale. A partner app he built here has over a million users.',
+    npc: "I'm an engineer - I built Pulse with Angel at Booking. The big leagues: Booking, Just Eat, Philips. This is where he learned to ship at scale. That app has over a million users now.",
     options: [
-      { text: "What's he proudest of?", to: 'proud' },
+      { text: 'What was he like to build with?', to: 'proud' },
       { text: '(Leave)', to: 'end' },
     ],
   },
   proud: {
-    npc: "Taking Pulse from a sketch to a million users, and co-authoring a published paper on Just Eat's ranking. Engineers respect him. Users barely notice him. That's the job.",
+    npc: "He took Pulse from a sketch to a million users and never lost the plot. Later, at Just Eat, he co-authored a published paper on the ranking algorithm. Engineers respect him. Users barely notice him. That is the job.",
     options: [{ text: 'Impressive.', to: 'end' }],
   },
 };
@@ -126,21 +129,21 @@ export const ANGEL_DIALOGUE: Dialogue = {
     options: [
       { text: 'Why should we hire you?', to: 'why' },
       { text: 'What are you looking for?', to: 'want' },
-      { text: "Let's talk. (Finish)", to: 'end', card: CARD, goto: 'rooftop' },
+      { text: "Let's talk. (Finish)", to: 'end', card: CARD, goto: 'rooftop', contact: true },
     ],
   },
   why: {
     npc: "Ten years, four countries, AI to fintech to travel. I've built zero-to-one and scaled one-to-millions. I hire well, I ship, and I sweat the user. The rest is detail.",
     options: [
       { text: 'What are you after?', to: 'want' },
-      { text: "Let's talk.", to: 'end', card: CARD, goto: 'rooftop' },
+      { text: "Let's talk.", to: 'end', card: CARD, goto: 'rooftop', contact: true },
     ],
   },
   want: {
     npc: 'A product leadership role where AI actually matters and the problems are genuinely hard. Bonus points if it is good for the world.',
     options: [
       { text: 'Tell me again why you?', to: 'why' },
-      { text: "Let's talk.", to: 'end', card: CARD, goto: 'rooftop' },
+      { text: "Let's talk.", to: 'end', card: CARD, goto: 'rooftop', contact: true },
     ],
   },
 };

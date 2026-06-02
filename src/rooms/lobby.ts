@@ -14,8 +14,7 @@ export function buildLobbyScene(): HTMLCanvasElement {
 
   // header band
   r(ctx, 0, 0, 320, 15, P.ink);
-  drawText(ctx, 'ENGINE  ·  AI and NOW', 36, 4, P.amberLit, 1, P.black, 1);
-  drawText(ctx, 'Staff PM, AI Products', 188, 4, P.inkLight, 1, P.black, 1);
+  drawText(ctx, 'ENGINE  ·  AI and NOW  ·  Staff PM', 36, 4, P.amberLit, 1, P.black, 1);
 
   // case-study exhibits (glowing screens) + an award plaque
   exhibit(ctx, 38, 30, 50, 40, P.screen, 'PLATFORM');
@@ -36,13 +35,13 @@ export function buildLobbyScene(): HTMLCanvasElement {
 }
 
 const HOTSPOTS: Hotspot[] = [
-  { id: 'platform', name: 'the AI Platform', x: 38, y: 30, w: 50, h: 40, walkTo: { x: 63, y: 138 },
+  { id: 'platform', name: 'the AI Platform', x: 38, y: 30, w: 50, h: 40, walkTo: { x: 63, y: 138 }, url: 'https://angeljaime.com/case-study/ai-services',
     look: 'I built Engine\'s central AI platform, so any product team can ship LLM features in days instead of months. It now powers 6 or more AI products. The trick was treating those teams as customers.' },
-  { id: 'search', name: 'Smart Search', x: 100, y: 30, w: 50, h: 40, walkTo: { x: 125, y: 138 },
+  { id: 'search', name: 'Smart Search', x: 100, y: 30, w: 50, h: 40, walkTo: { x: 125, y: 138 }, url: 'https://angeljaime.com/case-study/eva',
     look: 'I rebuilt our AI hotel-search assistant. Unanswered questions dropped about 6x, answer quality jumped, and replies stayed fast. The lesson: the context you feed a model matters more than the model.' },
-  { id: 'ml', name: 'ML Personalization', x: 162, y: 30, w: 50, h: 40, walkTo: { x: 187, y: 138 },
+  { id: 'ml', name: 'ML Personalization', x: 162, y: 30, w: 50, h: 40, walkTo: { x: 187, y: 138 }, url: 'https://angeljaime.com/case-study/personalization',
     look: 'I stood up real-time ML personalization and the infrastructure behind it, so data scientists iterate in days and travelers see stays that fit. In ML products, the infrastructure IS the product.' },
-  { id: 'award', name: 'the award', x: 224, y: 34, w: 48, h: 30, walkTo: { x: 248, y: 138 },
+  { id: 'award', name: 'the award', x: 224, y: 34, w: 48, h: 30, walkTo: { x: 248, y: 138 }, url: 'https://angeljaime.com/case-study/eva', linkLabel: 'Read about EVA',
     look: 'An AI assistant built on that platform won Salesforce\'s Customer Success Award at Dreamforce 2025, on stage in front of tens of thousands of people.' },
 ];
 

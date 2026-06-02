@@ -10,6 +10,7 @@ import { P, css, type RGB } from './art/palette';
 import * as audio from './audio/engine';
 import { buildTitleScene } from './screens/title';
 import { CONFIG } from './config';
+import { initLinks, showGameUI, setCaseLink, clearCaseLink, contact } from './ui/links';
 
 const W = 320, H = 200, PLAY_H = 144;
 
@@ -112,6 +113,7 @@ const state: any = {
 // The initial room isn't entered via switchRoom, so fire its onEnter once here
 // (marks the lobby as "seen" for the finale-unlock logic).
 currentRoom.onEnter?.(state);
+initLinks();
 
 // ---------------- generic room hit-tests ----------------
 function inRect(mx: number, my: number, o: any) { return mx >= o.x && mx < o.x + o.w && my >= o.y && my < o.y + o.h; }
@@ -181,6 +183,7 @@ function startGame() {
     try { (screen.orientation as any)?.lock?.('landscape'); } catch (e) { /* ignore */ }
   }
   state.screen = 'game';
+  showGameUI(true);
 }
 window.addEventListener('keydown', (e) => {
   if (e.key === 'm' || e.key === 'M') audio.toggleMute();
@@ -263,6 +266,7 @@ function runAction(verb: string, hs: any) {
     text = hs.responses?.[verb] || DEFAULT_RESPONSES[verb] || 'Hmm.';
   }
   say(text);
+  if (hs.url) setCaseLink(hs.url, hs.linkLabel || 'Read the case study');
 }
 
 function handleNPC(verb: string, npc: any) {
@@ -304,6 +308,7 @@ function selectOption(i: number) {
   if (o.set) state.flags[o.set] = true;
   if (o.give) addItem(o.give);
   if (o.card) state.ending = { since: state.now, lines: o.card, goto: o.goto };
+  if (o.contact) contact(true);
   if (o.once) state.used.add(o.key);
   state.speech = { lines: wrapText(o.text, 180), until: state.now + Math.max(1200, o.text.length * 45), color: [238, 238, 224], x: state.guy.x };
   if (o.to === 'end') { state.dialogue = null; return; }
@@ -313,6 +318,7 @@ function selectOption(i: number) {
 
 // ---------------- rooms ----------------
 function switchRoom(toId: string, entry: any) {
+  clearCaseLink(); contact(false);
   currentRoom = ROOMS[toId];
   if (!bgCache[toId]) bgCache[toId] = currentRoom.build();
   applyBgImage(currentRoom);
@@ -353,6 +359,7 @@ function loadGame() {
     state.inventory = (d.inv || []).map((id: string) => makeItem(id));
     state.verb = d.verb || 'Look at';
     state.screen = 'game';
+    showGameUI(true);
     switchRoom(d.room || 'lobby', d.guy || ROOMS[d.room || 'lobby'].start);
     if (d.guy) state.guy.facing = d.guy.facing || 'right';
     if (d.song) { audio.setSong(d.song); if (d.song === 'auto') audio.setTheme(themeFor(currentRoom.id)); }

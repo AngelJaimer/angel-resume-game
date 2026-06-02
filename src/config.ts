@@ -30,6 +30,7 @@ export const CONFIG = {
     'Made with Claude Code and pointclick-kit.',
     '',
     '(c) 2026 Angel Jaime.',
+    'angeljaime.com',
     'linkedin.com/in/angel-jaime-3054b632',
   ],
 };
