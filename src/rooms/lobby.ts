@@ -1,5 +1,5 @@
 import { P } from '../art/palette';
-import { drawText } from '../art/font';
+import { drawText, textWidth } from '../art/font';
 import { r, interior, exhibit, liftDoor } from './_util';
 import { drawConcierge } from '../art/actor';
 import { CONCIERGE_DIALOGUE } from '../content/dialogues';
@@ -30,7 +30,10 @@ export function buildLobbyScene(): HTMLCanvasElement {
   r(ctx, 288, 40, 26, 62, P.glass);
   r(ctx, 300, 40, 1, 62, P.glassDark);
   r(ctx, 288, 40, 26, 2, P.glassLit);
-  drawText(ctx, 'EXIT', 289, 92, P.inkLight, 1, P.black, 1);
+  // "OUTSIDE" sign above the street door (not "exit" — you're not leaving the game)
+  r(ctx, 266, 22, 52, 11, P.ink);
+  r(ctx, 266, 22, 52, 1, P.amberLit);
+  drawText(ctx, 'OUTSIDE', 266 + Math.round((52 - textWidth('OUTSIDE', 1, 1)) / 2), 24, P.amberLit, 1, P.black, 1);
   return cv;
 }
 

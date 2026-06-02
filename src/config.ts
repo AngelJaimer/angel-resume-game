@@ -11,8 +11,8 @@ export const CONFIG = {
 
   // --- Per-scene music (theme keys: town | gate | sardana | medieval) ---
   // No bespoke office score yet — every room uses a calm default. Tune later.
-  roomTheme: { rooftop: 'sardana', outside: 'town' } as Record<string, string>,
-  defaultTheme: 'town',
+  roomTheme: {} as Record<string, string>,
+  defaultTheme: 'lofi',
 
   // --- Save slot (localStorage) ---
   saveKey: 'angel_resume_game_v1',

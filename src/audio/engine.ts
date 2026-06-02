@@ -20,7 +20,7 @@ const LOOKAHEAD = 0.025;
 const AHEAD = 0.12;
 const STEPS_PER_BAR = 8;
 
-type ThemeName = 'town' | 'gate' | 'title' | 'sardana' | 'medieval';
+type ThemeName = 'town' | 'gate' | 'title' | 'sardana' | 'medieval' | 'lofi';
 let active: ThemeName = 'town';
 let pending: ThemeName | null = null;
 let manualSong: ThemeName | null = null; // when set, overrides per-room adaptivity
@@ -29,13 +29,14 @@ const CHORDS: Record<string, number[]> = {
   Am: [45, 57, 60, 64], G: [43, 55, 59, 62], F: [41, 53, 57, 60], E: [40, 52, 56, 59],
   C: [48, 60, 64, 67], Dm: [38, 57, 62, 65],
 };
-type Theme = { bpm: number; style: 'andalusian' | 'sardana' | 'medieval'; prog: string[]; scale: number[]; gain: number };
+type Theme = { bpm: number; style: 'andalusian' | 'sardana' | 'medieval' | 'lofi'; prog: string[]; scale: number[]; gain: number };
 const THEMES: Record<ThemeName, Theme> = {
   town:     { bpm: 104, style: 'andalusian', prog: ['Am', 'G', 'F', 'E'], scale: [57, 59, 60, 62, 64, 65, 67, 69], gain: 0.9 },
   title:    { bpm: 96,  style: 'andalusian', prog: ['Am', 'F', 'G', 'E'], scale: [57, 60, 64, 65, 67, 69, 72], gain: 1.0 },
   gate:     { bpm: 78,  style: 'andalusian', prog: ['Am', 'Am', 'E', 'E'], scale: [57, 60, 62, 64, 67], gain: 0.8 },
   sardana:  { bpm: 116, style: 'sardana',    prog: ['C', 'F', 'G', 'C'], scale: [60, 62, 64, 65, 67, 69, 71, 72], gain: 0.85 },
   medieval: { bpm: 100, style: 'medieval',   prog: ['Dm', 'Dm', 'Dm', 'Dm'], scale: [62, 64, 65, 67, 69, 71, 72], gain: 0.85 },
+  lofi:     { bpm: 82,  style: 'lofi',        prog: ['C', 'Am', 'F', 'G'], scale: [60, 62, 64, 65, 67, 69, 71, 72], gain: 0.85 },
 };
 
 const ARP = [{ s: 0, i: 1 }, { s: 2, i: 2 }, { s: 3, i: 3 }, { s: 4, i: 2 }, { s: 6, i: 3 }, { s: 7, i: 1 }];
@@ -43,6 +44,7 @@ const ARP = [{ s: 0, i: 1 }, { s: 2, i: 2 }, { s: 3, i: 3 }, { s: 4, i: 2 }, { s
 // The song selector (UI) maps to themes; 'auto' = adaptive per room.
 export const SONGS = [
   { label: 'Auto', key: 'auto' },
+  { label: 'Lo-fi', key: 'lofi' },
   { label: 'Lobby', key: 'town' },
   { label: 'Strings', key: 'sardana' },
   { label: 'Classic', key: 'medieval' },
@@ -190,6 +192,15 @@ function schedule(step: number, bar: number, time: number) {
       if (step % 2 === 1) perc(ctx, master, noise, time, 'shaker', 0.2 * g);
       if (step === 0 || step === 4) perc(ctx, master, noise, time, 'clave', 0.22 * g);
     }
+  } else if (th.style === 'lofi') {
+    // calm lo-fi: soft low bass, gentle marimba arpeggios, an occasional pluck
+    const chord = CHORDS[th.prog[bar % th.prog.length]];
+    if (step === 0) bass(ctx, master, time, chord[0] - 12, spb() * 4, 0.4 * g);
+    if (step === 4) bass(ctx, master, time, chord[0] - 12, spb() * 2.6, 0.3 * g);
+    const pat = [{ s: 0, i: 2 }, { s: 3, i: 3 }, { s: 6, i: 1 }];
+    for (const a of pat) if (a.s === step && rnd(bar * 9 + step) > 0.2) marimba(ctx, master, time, chord[a.i], spb() * 2, 0.2 * g);
+    if ((step === 2 || step === 5) && rnd(bar * 7 + step * 3) > 0.55) pluck(ctx, master, time, sc[Math.floor(rnd(bar * 4 + step) * sc.length)], spb() * 1.6, 0.15 * g);
+    if (noise && step % 4 === 2) perc(ctx, master, noise, time, 'shaker', 0.1 * g);
   } else {
     // medieval (Llibre Vermell flavour): open-fifth drone + modal reed + frame drum
     if (step === 0) { bass(ctx, master, time, 38, spb() * 8, 0.4 * g); bass(ctx, master, time, 45, spb() * 8, 0.28 * g); }

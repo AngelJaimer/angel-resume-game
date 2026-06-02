@@ -64,7 +64,7 @@ const titleBg = buildTitleScene();
 // Each scene gets its own default music (overridable via the song selector).
 // Edit the room->theme map in src/config.ts.
 function themeFor(id: string) {
-  return (CONFIG.roomTheme[id] || CONFIG.defaultTheme) as 'town' | 'gate' | 'sardana' | 'medieval';
+  return (CONFIG.roomTheme[id] || CONFIG.defaultTheme) as 'town' | 'lofi' | 'gate' | 'sardana' | 'medieval';
 }
 
 const bgCache: Record<string, HTMLCanvasElement> = {};
@@ -575,6 +575,10 @@ function frame(ts: number) {
     if (npc.hideIf && state.flags[npc.hideIf]) continue;
     if (npc.showIf && !state.flags[npc.showIf]) continue;
     npc.draw(ictx, npc.feet.x, npc.feet.y, state.guy.x < npc.feet.x ? 'left' : 'right', t);
+  }
+  if (!state.dialogue && !state.ending && state.hover && state.hover.exit) {
+    ictx.fillStyle = 'rgba(240,202,96,0.16)';
+    ictx.fillRect(state.hover.exit.x, state.hover.exit.y, state.hover.exit.w, state.hover.exit.h);
   }
   drawExitArrows(ictx, t);
   drawActor(ictx, state.guy.x, state.guy.y, state.guy.facing, state.guy.moving, t, Math.sin(t * 2.2) * 1.2);
