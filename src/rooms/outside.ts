@@ -53,6 +53,26 @@ export function buildOutsideScene(): HTMLCanvasElement {
     ctx.beginPath(); ctx.arc(ox - 2, oy - 2, rad - 3, 0, Math.PI * 2); ctx.fill();
   }
 
+  // a road/tri bike parked on the sidewalk (triathlon)
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = 'rgb(36,36,40)';
+  ctx.beginPath(); ctx.arc(58, 116, 8, 0, Math.PI * 2); ctx.stroke();
+  ctx.beginPath(); ctx.arc(86, 116, 8, 0, Math.PI * 2); ctx.stroke();
+  ctx.strokeStyle = 'rgb(' + P.amber[0] + ',' + P.amber[1] + ',' + P.amber[2] + ')';
+  ctx.beginPath();
+  ctx.moveTo(58, 116); ctx.lineTo(71, 103); ctx.lineTo(86, 116);
+  ctx.moveTo(71, 103); ctx.lineTo(65, 116);
+  ctx.moveTo(58, 116); ctx.lineTo(65, 116);
+  ctx.moveTo(71, 103); ctx.lineTo(82, 104);
+  ctx.stroke();
+  ctx.strokeStyle = 'rgb(36,36,40)';
+  ctx.beginPath(); ctx.moveTo(82, 104); ctx.lineTo(86, 116); ctx.stroke();
+  ctx.lineWidth = 1;
+  r(ctx, 79, 101, 8, 2, P.ink);   // handlebar
+  r(ctx, 66, 99, 9, 2, P.ink);    // saddle
+  r(ctx, 64, 114, 3, 3, P.ink);   // crank
+  r(ctx, 57, 115, 2, 2, P.steel); r(ctx, 85, 115, 2, 2, P.steel); // hubs
+
   // a bench with a coffee cup
   r(ctx, 148, 94, 34, 4, P.woodDark); r(ctx, 148, 94, 34, 1, P.woodLit);
   r(ctx, 150, 98, 3, 8, P.woodDark); r(ctx, 177, 98, 3, 8, P.woodDark);
@@ -119,6 +139,12 @@ const HOTSPOTS: Hotspot[] = [
     look: 'Henry. My most important launch of 2026. I am also building him an app to track the newborn chaos. Currently in production. Sleep is the main bug.' },
   { id: 'bench', name: 'the bench', x: 148, y: 94, w: 34, h: 16, walkTo: { x: 165, y: 138 },
     look: 'A quiet bench in the sun. Angel investing happens here too: a small portfolio in fintech, edtech and climate-tech.' },
+  { id: 'bicycle', name: 'the bicycle', x: 50, y: 96, w: 46, h: 24, walkTo: { x: 72, y: 138 },
+    links: [
+      { url: 'https://martorelldigital.cat/angel-jaime-desafia-els-limits-i-completa-el-patagonman-un-dels-triatlons-mes-durs-del-mon/', label: 'Read the story' },
+      { url: 'https://labustia.cat/angel-jaime-completa-el-patagonman-el-triatlo-extrem-a-la-fi-del-mon/', label: 'More press' },
+    ],
+    look: "Triathlon. When I'm not shipping product, I race long-course triathlon. I completed the Patagonman, an extreme triathlon at the end of the world in Patagonia and one of the toughest on the planet. Product leadership is an endurance sport too." },
   { id: 'tree', name: 'the tree', x: 104, y: 48, w: 40, h: 60, walkTo: { x: 130, y: 138 },
     look: 'A good tree. Ten years across four countries, and the roots are still in Barcelona.' },
 ];
