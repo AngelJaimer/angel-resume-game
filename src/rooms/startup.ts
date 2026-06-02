@@ -48,9 +48,9 @@ const HOTSPOTS: Hotspot[] = [
 ];
 
 const NPCS: NPC[] = [
-  { id: 'founder', name: 'a co-founder', x: 224, y: 96, w: 24, h: 44,
+  { id: 'founder', name: 'a Yayzy employee', x: 224, y: 96, w: 24, h: 44,
     feet: { x: 236, y: 130 }, walkTo: { x: 216, y: 138 }, facing: 'left', color: [150, 210, 160],
-    look: 'A co-founder running on cold brew and conviction. Tiny team, enormous ambition.',
+    look: "One of Yayzy's first hires, running on cold brew and conviction. Tiny team, enormous ambition.",
     draw: drawFounder, dialogue: STARTUP_DIALOGUE },
 ];
 

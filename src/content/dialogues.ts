@@ -53,7 +53,7 @@ export const CONCIERGE_DIALOGUE: Dialogue = {
 // ---- Scale-ups: a growth PM ----
 export const SCALEUPS_DIALOGUE: Dialogue = {
   start: {
-    npc: "I designed alongside Angel on Revolut Business. Scale-up life: everything's on fire, in a good way. He ran Rewards and Referrals - Revolut Points started right here on this floor.",
+    npc: "I shipped alongside Angel on Revolut Business. Scale-up life: everything's on fire, in a good way. He ran Rewards and Referrals - Revolut Points started right here on this floor.",
     options: [
       { text: 'What was he like to work with?', to: 'hard' },
       { text: '(Leave)', to: 'end' },

@@ -39,9 +39,9 @@ const HOTSPOTS: Hotspot[] = [
 ];
 
 const NPCS: NPC[] = [
-  { id: 'veteran', name: 'a senior PM', x: 262, y: 96, w: 24, h: 44,
+  { id: 'veteran', name: 'a senior engineer', x: 262, y: 96, w: 24, h: 44,
     feet: { x: 274, y: 130 }, walkTo: { x: 252, y: 138 }, facing: 'left', color: [150, 196, 240],
-    look: 'A veteran PM, greying at the temples, unbothered by fire drills. He has shipped at scale.',
+    look: 'A veteran engineer, greying at the temples, unbothered by fire drills. He has shipped at scale.',
     draw: drawVeteran, dialogue: BIGTECH_DIALOGUE },
 ];
 
