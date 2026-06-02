@@ -80,6 +80,16 @@
       #overview .links a.amber { background: #d4a800; color: #171412; }
       #overview .links a:hover { opacity: 0.9; }
       #overview .x { position: absolute; top: 10px; right: 14px; border: none; background: none; font-size: 22px; cursor: pointer; color: #9a8c70; line-height: 1; }
+      /* exhibit message card (links live inside the message) */
+      #exhibit { position: fixed; inset: 0; z-index: 40; display: none; align-items: center; justify-content: center; background: rgba(8, 6, 10, 0.78); padding: 16px; }
+      #exhibit .card { background: #f9f6f0; color: #171412; max-width: 480px; width: 100%; max-height: 86vh; overflow: auto; border-radius: 12px; padding: 24px 26px 22px; position: relative; font-family: 'Inter', system-ui, sans-serif; box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55); }
+      #exhibit h2 { font-family: 'Spectral', Georgia, serif; font-size: 23px; margin: 0 0 12px; letter-spacing: -0.01em; }
+      #exhibit p { line-height: 1.6; font-size: 14.5px; margin: 0 0 18px; color: #2b2622; }
+      #exhibit .links { display: flex; flex-wrap: wrap; gap: 9px; }
+      #exhibit .links a { background: #171412; color: #f9f6f0; text-decoration: none; padding: 9px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; }
+      #exhibit .links a:first-child { background: #d4a800; color: #171412; }
+      #exhibit .links a:hover { opacity: 0.9; }
+      #exhibit .x { position: absolute; top: 10px; right: 14px; border: none; background: none; font-size: 22px; cursor: pointer; color: #9a8c70; line-height: 1; }
     </style>
   </head>
   <body>
@@ -99,11 +109,13 @@
       <a id="uiSite" class="pill" href="https://angeljaime.com" target="_blank" rel="noopener">angeljaime.com ↗</a>
       <button id="uiOverview" class="pill" type="button">Overview</button>
     </div>
-    <div id="uiLinks" class="pillrow pillcenter" style="display:none"></div>
-    <div id="uiContact">
-      <a class="pill" href="https://angeljaime.com" target="_blank" rel="noopener">angeljaime.com ↗</a>
-      <a class="pill" href="mailto:angeljaimer@gmail.com">Email ↗</a>
-      <a class="pill" href="https://www.linkedin.com/in/angel-jaime-3054b632/" target="_blank" rel="noopener">LinkedIn ↗</a>
+    <div id="exhibit">
+      <div class="card">
+        <button id="exClose" class="x" type="button" aria-label="Close">✕</button>
+        <h2 id="exTitle"></h2>
+        <p id="exBody"></p>
+        <div id="exLinks" class="links"></div>
+      </div>
     </div>
     <div id="overview">
       <div class="card">
@@ -117,7 +129,7 @@
           <li><b>Startup —</b> Yayzy: climate-fintech, CPO, 0→1 (Apple App of the Day, 30+ countries).</li>
           <li><b>Big Tech —</b> Booking.com (Pulse, 1M+ users), Just Eat (Search, a published paper), Philips.</li>
           <li><b>Education —</b> Executive MBA, MSc Business Intelligence, Barcelona.</li>
-          <li><b>Off the clock —</b> newsletters, teaching, indie games, and Henry.</li>
+          <li><b>Off the clock —</b> Week in Product, teaching, coaching, indie games, and Henry.</li>
         </ul>
         <div class="links">
           <a class="amber" href="https://angeljaime.com" target="_blank" rel="noopener">Visit angeljaime.com ↗</a>

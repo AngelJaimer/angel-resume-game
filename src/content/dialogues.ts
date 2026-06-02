@@ -19,18 +19,6 @@ export interface DialogueNode {
 }
 export type Dialogue = Record<string, DialogueNode>;
 
-// ---- The closing contact card (shown from Angel's dialogue on the roof) ----
-const CARD = [
-  'GET IN TOUCH', '',
-  'Angel Jaime - Product Leader',
-  'AI · Fintech · Travel · Marketplaces', '',
-  'angeljaime.com',
-  'angeljaimer@gmail.com',
-  'linkedin.com/in/angel-jaime-3054b632', '',
-  'The links up top are clickable.',
-  'Thanks for touring the building.',
-];
-
 // ---- Lobby: the concierge orients the recruiter ----
 export const CONCIERGE_DIALOGUE: Dialogue = {
   start: {
@@ -129,21 +117,21 @@ export const ANGEL_DIALOGUE: Dialogue = {
     options: [
       { text: 'Why should we hire you?', to: 'why' },
       { text: 'What are you looking for?', to: 'want' },
-      { text: "Let's talk. (Finish)", to: 'end', card: CARD, goto: 'rooftop', contact: true },
+      { text: "Let's talk. (Finish)", to: 'end', contact: true },
     ],
   },
   why: {
     npc: "Ten years, four countries, AI to fintech to travel. I've built zero-to-one and scaled one-to-millions. I hire well, I ship, and I sweat the user. The rest is detail.",
     options: [
       { text: 'What are you after?', to: 'want' },
-      { text: "Let's talk.", to: 'end', card: CARD, goto: 'rooftop', contact: true },
+      { text: "Let's talk.", to: 'end', contact: true },
     ],
   },
   want: {
     npc: 'A product leadership role where AI actually matters and the problems are genuinely hard. Bonus points if it is good for the world.',
     options: [
       { text: 'Tell me again why you?', to: 'why' },
-      { text: "Let's talk.", to: 'end', card: CARD, goto: 'rooftop', contact: true },
+      { text: "Let's talk.", to: 'end', contact: true },
     ],
   },
 };
