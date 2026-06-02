@@ -3,3 +3,5 @@ dist/
 art-src/
 .DS_Store
 *.local
+.claude/
+martohell-game/
