@@ -58,6 +58,16 @@ export function buildOutsideScene(): HTMLCanvasElement {
   r(ctx, 150, 98, 3, 8, P.woodDark); r(ctx, 177, 98, 3, 8, P.woodDark);
   r(ctx, 167, 90, 3, 4, P.cream); r(ctx, 167, 89, 4, 1, [210, 210, 206]);
 
+  // a little reviews easel (coaching testimonials)
+  r(ctx, 126, 82, 22, 16, P.woodDark);
+  r(ctx, 128, 84, 18, 12, P.cream);
+  for (let i = 0; i < 5; i++) r(ctx, 130 + i * 3, 86, 2, 2, P.gold);
+  r(ctx, 130, 91, 14, 1, P.woodShadow);
+  r(ctx, 130, 94, 10, 1, P.woodShadow);
+  r(ctx, 129, 97, 2, 11, P.woodDark);
+  r(ctx, 145, 97, 2, 11, P.woodDark);
+  r(ctx, 132, 102, 12, 2, P.woodShadow);
+
   // a newsstand kiosk (newsletters / writing)
   r(ctx, 194, 72, 44, 32, P.woodDark);
   r(ctx, 196, 74, 40, 28, P.wood);
@@ -98,8 +108,11 @@ export function buildOutsideScene(): HTMLCanvasElement {
 }
 
 const HOTSPOTS: Hotspot[] = [
+  { id: 'coaching', name: 'the reviews board', x: 124, y: 80, w: 26, h: 30, walkTo: { x: 138, y: 138 },
+    links: [{ url: 'https://angeljaime.com/coaching', label: 'Read the testimonials' }],
+    look: 'Coaching. I mentor senior PMs and product leaders, one-on-one and at Mento, Product School and EADA. Do not take my word for it - the testimonials are on my site.' },
   { id: 'newsstand', name: 'the newsstand', x: 196, y: 58, w: 40, h: 46, walkTo: { x: 210, y: 138 }, url: 'https://angeljaime.com/writing', linkLabel: 'Read the writing',
-    look: 'Writing and teaching. I write a product newsletter (El Producto, over a thousand weekly readers) and Week in Product, and I coach and teach PMs at Mento, Product School and EADA.' },
+    look: 'Writing and teaching. I write a product newsletter (El Producto, over a thousand weekly readers) and Week in Product, and I teach product management at Product School and EADA.' },
   { id: 'arcade', name: 'the arcade cabinet', x: 250, y: 60, w: 26, h: 44, walkTo: { x: 263, y: 138 }, url: 'https://angeljaimer.github.io/montjuic-game/', linkLabel: 'Play the game',
     look: 'I build tiny point-and-click adventures for fun: El Secreto de Montjuic and Martohell. And, well, this resume is one of them.' },
   { id: 'stroller', name: 'the stroller', x: 288, y: 86, w: 24, h: 20, walkTo: { x: 298, y: 138 }, url: 'https://angeljaime.com/case-study/henry',
