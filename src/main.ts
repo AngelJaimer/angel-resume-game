@@ -357,6 +357,7 @@ function drawExitArrows(ctx: CanvasRenderingContext2D, t: number) {
   const pulse = (0.55 + 0.45 * Math.sin(t * 3)).toFixed(2);
   for (const ex of currentRoom.exits) {
     if (!exitOn(ex)) continue;
+    if (ex.arrow === 'none') continue;
     const cx = ex.x + ex.w / 2, cy = ex.y + ex.h / 2;
     ctx.fillStyle = `rgba(250,228,152,${pulse})`;
     ctx.beginPath();

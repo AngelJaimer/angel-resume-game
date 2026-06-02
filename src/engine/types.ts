@@ -56,7 +56,7 @@ export interface Exit {
   walkTo: { x: number; y: number };
   to: string;               // destination room id
   entry: { x: number; y: number };
-  arrow: 'left' | 'right' | 'up';
+  arrow: 'left' | 'right' | 'up' | 'none';
   showIf?: string;          // only active once this flag is set
   hideIf?: string;          // inactive once this flag is set (e.g. an episode-specific exit)
 }

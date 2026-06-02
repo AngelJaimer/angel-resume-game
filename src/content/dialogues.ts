@@ -37,7 +37,7 @@ export const CONCIERGE_DIALOGUE: Dialogue = {
     ],
   },
   nav: {
-    npc: "The lift is on your left. Big Tech, Scale-ups, Startup, and Education down in the basement. Tour them all and the roof opens up — that's where you'll find him.",
+    npc: "The lift is on your left: Big Tech, Scale-ups, Startup, and Education down in the basement. Take it up to the roof whenever you want to meet Angel himself.",
     options: [
       { text: 'Thanks.', to: 'start' },
     ],
@@ -98,7 +98,7 @@ export const BIGTECH_DIALOGUE: Dialogue = {
 // ---- Education: the professor ----
 export const EDU_DIALOGUE: Dialogue = {
   start: {
-    npc: 'Ah, the archive. An Executive MBA, a master in Business Intelligence, and — where it all began — a hospitality degree in Barcelona.',
+    npc: 'Ah, the archive. An Executive MBA, a master in Business Intelligence, and the hospitality degree in Barcelona where it all began.',
     options: [
       { text: 'Hospitality to product?', to: 'path' },
       { text: '(Leave)', to: 'end' },
@@ -113,7 +113,7 @@ export const EDU_DIALOGUE: Dialogue = {
 // ---- Rooftop: Angel himself (the finale) ----
 export const ANGEL_DIALOGUE: Dialogue = {
   start: {
-    npc: 'You made it to the roof. So — the whole building in one breath: I take fuzzy, high-stakes problems and ship products that move real numbers.',
+    npc: 'You made it to the roof. So, the whole building in one breath: I take fuzzy, high-stakes problems and ship products that move real numbers.',
     options: [
       { text: 'Why should we hire you?', to: 'why' },
       { text: 'What are you looking for?', to: 'want' },

@@ -3,58 +3,62 @@ import { drawText } from '../art/font';
 import { r, interior } from './_util';
 import type { Room, Hotspot, Exit } from '../engine/types';
 
-// THE ELEVATOR — the hub. A button per floor; the Rooftop button only works
-// once every floor has been toured (handled by the `showIf: 'seen_all'` exit).
+// THE ELEVATOR — one clickable directory (full floor names) on the left is the
+// navigation; the doors on the right are decor. Click a floor to ride to it.
 const STEEL: RGB = [78, 82, 90], STEEL_L: RGB = [104, 108, 116], STEEL_F: RGB = [62, 66, 74], STEEL_D: RGB = [44, 48, 56];
 
-// label, y, lit-accent  (top -> bottom on the call panel)
-const BUTTONS: Array<[string, number]> = [
-  ['R  Roof', 24], ['3  Scale', 40], ['2  Start', 56],
-  ['1  Big', 72], ['G  Now', 88], ['B  Edu', 104],
+const FLOORS: Array<{ token: string; name: string; to: string }> = [
+  { token: 'R', name: 'Rooftop', to: 'rooftop' },
+  { token: '3', name: 'Scale-ups', to: 'scaleups' },
+  { token: '2', name: 'Startup', to: 'startup' },
+  { token: '1', name: 'Big Tech', to: 'bigtech' },
+  { token: 'G', name: 'AI and Now', to: 'lobby' },
+  { token: 'B', name: 'Education', to: 'basement' },
 ];
+const ROW_Y = (i: number) => 24 + i * 10;
 
 export function buildElevatorScene(): HTMLCanvasElement {
   const cv = document.createElement('canvas'); cv.width = 320; cv.height = 144;
   const ctx = cv.getContext('2d')!; ctx.imageSmoothingEnabled = false;
   interior(ctx, STEEL, STEEL_L, STEEL_F, STEEL_D);
+  for (let x = 170; x < 212; x += 13) r(ctx, x, 4, 1, 92, STEEL_D); // brushed-steel seams
 
-  // brushed-steel back wall seams
-  for (let x = 24; x < 240; x += 28) r(ctx, x, 4, 1, 96, STEEL_D);
-
-  // directory sign (left)
-  r(ctx, 20, 16, 150, 84, P.ink);
-  r(ctx, 20, 16, 150, 1, P.amberLit);
-  drawText(ctx, 'DIRECTORY', 30, 22, P.amberLit, 1, P.black, 1);
-  const dir = ['R   Rooftop', '3   Scale-ups', '2   Startup', '1   Big Tech', 'G   AI and Now', 'B   Education'];
-  for (let i = 0; i < dir.length; i++) drawText(ctx, dir[i], 30, 36 + i * 10, P.inkLight, 1, P.black, 1);
-
-  // call panel (right)
-  r(ctx, 244, 18, 68, 104, P.ink);
-  r(ctx, 244, 18, 68, 1, P.steelLit);
-  for (const [label, y] of BUTTONS) {
-    r(ctx, 248, y, 58, 13, STEEL_D);
-    r(ctx, 248, y, 58, 1, STEEL_L);
-    r(ctx, 250, y + 2, 3, 9, P.amberLit);      // button light
-    drawText(ctx, label, 256, y + 3, P.inkLight, 1, P.black, 1);
+  // directory call panel — each row is a clickable floor (kept above head height)
+  r(ctx, 14, 8, 142, 80, P.ink);
+  r(ctx, 14, 8, 142, 1, P.amberLit);
+  drawText(ctx, 'DIRECTORY', 22, 12, P.amberLit, 1, P.black, 1);
+  for (let i = 0; i < FLOORS.length; i++) {
+    const ry = ROW_Y(i);
+    r(ctx, 20, ry, 128, 9, STEEL_D);
+    r(ctx, 20, ry, 128, 1, STEEL_L);
+    r(ctx, 23, ry + 2, 3, 5, P.amberLit);   // floor light
+    drawText(ctx, FLOORS[i].token + '  ' + FLOORS[i].name, 31, ry + 1, P.inkLight, 1, P.black, 1);
   }
+
+  // elevator doors (decor) + floor indicator
+  r(ctx, 224, 22, 80, 110, [58, 62, 70]);
+  r(ctx, 228, 26, 35, 102, P.steel); r(ctx, 265, 26, 35, 102, P.steel);
+  r(ctx, 262, 26, 4, 102, STEEL_D);
+  r(ctx, 228, 26, 72, 2, P.steelLit);
+  r(ctx, 246, 12, 40, 8, P.ink); r(ctx, 246, 12, 40, 1, P.amberDark);
+  drawText(ctx, 'G', 262, 13, P.amberLit, 1, P.black, 1);
   return cv;
 }
 
-// A locked-roof message sits under the R button until `seen_all` unlocks the
-// real exit (exits are hit-tested before hotspots, so the exit wins once active).
 const HOTSPOTS: Hotspot[] = [
-  { id: 'panel', name: 'the call panel', x: 244, y: 18, w: 68, h: 104, walkTo: { x: 214, y: 138 },
-    look: 'A polished brass call panel. Pick any floor - the car hums into motion. The roof is always open: that is where you will find Angel.' },
+  { id: 'doors', name: 'the elevator doors', x: 224, y: 22, w: 80, h: 110, walkTo: { x: 200, y: 138 },
+    look: 'The elevator doors slide open between floors with a soft chime. Pick a floor from the directory on the left, and up (or down) you go.' },
 ];
 
-const EXITS: Exit[] = [
-  { id: 'toRooftop', name: 'the Rooftop', x: 248, y: 24, w: 58, h: 13, walkTo: { x: 214, y: 138 }, to: 'rooftop', entry: { x: 46, y: 134 }, arrow: 'up' },
-  { id: 'toScaleups', name: 'the Scale-ups floor', x: 248, y: 40, w: 58, h: 13, walkTo: { x: 214, y: 138 }, to: 'scaleups', entry: { x: 46, y: 136 }, arrow: 'right' },
-  { id: 'toStartup', name: 'the Startup floor', x: 248, y: 56, w: 58, h: 13, walkTo: { x: 214, y: 138 }, to: 'startup', entry: { x: 46, y: 136 }, arrow: 'right' },
-  { id: 'toBigtech', name: 'the Big Tech floor', x: 248, y: 72, w: 58, h: 13, walkTo: { x: 214, y: 138 }, to: 'bigtech', entry: { x: 46, y: 136 }, arrow: 'right' },
-  { id: 'toLobby', name: 'the lobby', x: 248, y: 88, w: 58, h: 13, walkTo: { x: 214, y: 138 }, to: 'lobby', entry: { x: 44, y: 138 }, arrow: 'right' },
-  { id: 'toBasement', name: 'Education', x: 248, y: 104, w: 58, h: 13, walkTo: { x: 214, y: 138 }, to: 'basement', entry: { x: 46, y: 136 }, arrow: 'right' },
-];
+const EXITS: Exit[] = FLOORS.map((f, i): Exit => ({
+  id: 'to_' + f.to,
+  name: f.to === 'lobby' ? 'AI and Now' : f.to === 'basement' ? 'Education' : f.to === 'rooftop' ? 'the Rooftop' : `the ${f.name} floor`,
+  x: 20, y: ROW_Y(i), w: 128, h: 9,
+  walkTo: { x: 92, y: 138 },
+  to: f.to,
+  entry: { x: f.to === 'lobby' ? 44 : 46, y: f.to === 'rooftop' ? 134 : 136 },
+  arrow: 'none',
+}));
 
 export const ELEVATOR: Room = {
   id: 'elevator',

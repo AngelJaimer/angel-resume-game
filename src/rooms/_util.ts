@@ -1,5 +1,5 @@
 import { P, css, type RGB } from '../art/palette';
-import { drawText } from '../art/font';
+import { drawText, textWidth } from '../art/font';
 
 // Shared room-drawing helpers. Coordinates are internal pixels; the room canvas
 // is 320x144 (the SCUMM panel owns y=144..200, outside this canvas).
@@ -29,7 +29,7 @@ export function exhibit(ctx: CanvasRenderingContext2D, x: number, y: number, w: 
   r(ctx, x, y, w, h, fill);
   r(ctx, x, y, w, 1, P.wallLit);
   r(ctx, x, y + h - 1, w, 1, P.black);
-  if (title) drawText(ctx, title, x + 4, y + 4, P.inkLight, 1, P.black, 1);
+  if (title) drawText(ctx, title, x + Math.max(2, Math.round((w - textWidth(title, 1, 1)) / 2)), y + 5, P.inkLight, 1, P.black, 1);
 }
 
 // A steel lift door (left wall of every content floor).
