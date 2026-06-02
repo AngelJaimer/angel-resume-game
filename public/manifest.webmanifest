@@ -1,15 +1,16 @@
 {
-  "name": "pointclick-kit",
-  "short_name": "Aventura",
-  "description": "Una aventura point-and-click estilo VGA.",
+  "name": "Angel Jaime — The Playable Résumé",
+  "short_name": "Angel Jaime",
+  "description": "A playable, point-and-click résumé — explore a product career, floor by floor.",
   "start_url": ".",
   "scope": ".",
   "display": "fullscreen",
   "orientation": "landscape",
-  "background_color": "#07070a",
-  "theme_color": "#07070a",
+  "background_color": "#171412",
+  "theme_color": "#171412",
   "icons": [
     { "src": "icon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ]
 }

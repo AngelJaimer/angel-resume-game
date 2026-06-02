@@ -1,41 +1,50 @@
 #!/usr/bin/env python3
-"""Generate the PWA icons (public/icon-180.png and icon-512.png).
+"""Generate the PWA icons (public/icon-180/192/512.png).
 
-Draws a chunky pixel-art compass star on a dithered deep-blue field —
-a generic "adventure" mark. Repaint per game (a key, a skull, a crown...)
-by editing the shape below, then re-run:  python scripts/makeicon.py
+Draws a dusk-lit building — the "Angel Jaime Building" — with glowing amber
+windows over a warm sunset gradient, matching the game's look. Re-run after
+edits:  python scripts/makeicon.py
 """
-import math, os
+import os
 from PIL import Image, ImageDraw
 
 N = 64  # render small for crisp pixels, then upscale with NEAREST
-img = Image.new("RGB", (N, N), (22, 20, 44))
+img = Image.new("RGB", (N, N), (30, 26, 44))
 d = ImageDraw.Draw(img)
 
-# radial deep-blue background
-cx = cy = N / 2
+# warm dusk gradient with a touch of ordered dither
+sky = [(46, 40, 70), (120, 80, 96), (210, 140, 96), (244, 198, 150)]
+def ramp(t):
+    t = max(0.0, min(0.999, t))
+    seg = t * (len(sky) - 1); i = int(seg); f = seg - i
+    a = sky[i]; b = sky[min(i + 1, len(sky) - 1)]
+    return tuple(int(a[k] + (b[k] - a[k]) * f) for k in range(3))
 for y in range(N):
+    base = ramp(y / N)
     for x in range(N):
-        r = math.hypot(x - cx, y - cy) / (N / 2)
-        t = max(0.0, min(1.0, r))
-        col = (int(40 - 20 * t), int(32 - 16 * t), int(70 - 30 * t))
-        # 2x2 ordered dither between two shades for a VGA feel
-        if ((x ^ y) & 1) and r < 0.9:
-            col = (col[0] + 8, col[1] + 6, col[2] + 10)
+        col = base
+        if (x ^ y) & 1:
+            col = tuple(min(255, c + 6) for c in col)
         img.putpixel((x, y), col)
 
-# 8-point compass star
-pts = []
-for i in range(16):
-    ang = math.pi * i / 8 - math.pi / 2
-    rad = 26 if i % 2 == 0 else 10
-    pts.append((cx + math.cos(ang) * rad, cy + math.sin(ang) * rad))
-d.polygon(pts, fill=(245, 200, 90), outline=(20, 14, 8))
-# inner core
-d.polygon([(cx, cy - 9), (cx + 5, cy), (cx, cy + 9), (cx - 5, cy)], fill=(255, 240, 200))
-d.ellipse([cx - 2, cy - 2, cx + 2, cy + 2], fill=(120, 80, 20))
+# the building silhouette
+bx0, bx1, by0, by1 = 20, 44, 14, 58
+dark = (34, 30, 46)
+d.rectangle([bx0, by0, bx1, by1], fill=dark)
+d.rectangle([bx0, by0, bx1, by0 + 1], fill=(64, 56, 74))   # lit top edge
+# amber rooftop sign
+d.rectangle([bx0 + 3, by0 - 4, bx1 - 3, by0 - 1], fill=(214, 170, 8))
+# glowing window grid (some lit, some dark)
+win, dim = (245, 206, 120), (52, 46, 62)
+for wy in range(by0 + 5, by1 - 3, 7):
+    for wx in range(bx0 + 4, bx1 - 3, 7):
+        lit = ((wx * 7 + wy * 13) % 5) < 3
+        d.rectangle([wx, wy, wx + 2, wy + 4], fill=win if lit else dim)
+# ground
+d.rectangle([0, by1, N, N], fill=(24, 20, 30))
+d.rectangle([0, by1, N, by1 + 1], fill=(52, 44, 58))
 
 out = os.path.join(os.path.dirname(__file__), "..", "public")
-for size in (180, 512):
+for size in (180, 192, 512):
     img.resize((size, size), Image.NEAREST).save(os.path.join(out, f"icon-{size}.png"))
-print("wrote public/icon-180.png and public/icon-512.png")
+print("wrote public/icon-180.png, icon-192.png, icon-512.png")

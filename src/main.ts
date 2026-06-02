@@ -140,14 +140,13 @@ display.addEventListener('pointermove', (e) => {
     return;
   }
   if (my >= PANEL_Y) {
-    const hp = hitPanel(mx, my);
-    state.hover = { panelVerb: hp && hp.type === 'verb' ? hp.verb : null };
+    state.hover = null;
   } else {
     const ex = hitExitR(mx, my);
     if (ex) { state.hover = { exit: ex }; return; }
     const npc = hitNPCR(mx, my);
-    const hs = npc || hitHotspotR(mx, my);
-    state.hover = { hotspot: hs, walkable: !hs && isWalkableR(mx, my) };
+    const hs = npc ? null : hitHotspotR(mx, my);
+    state.hover = { npc, hotspot: hs, walkable: !npc && !hs && isWalkableR(mx, my) };
   }
 });
 
@@ -593,7 +592,7 @@ function frame(ts: number) {
   drawSpeech(ictx, state, W);
   vignette(ictx);
   if (state.dialogue) drawDialoguePanel(ictx, dlgOptions(), state.hoverOpt);
-  else drawPanel(ictx, buildSentence(state), state.verb, state.inventory, state.selectedItem ? state.selectedItem.id : null);
+  else drawPanel(ictx, buildSentence(state));
   drawMusicIcon(ictx);
   drawGearIcon(ictx);
   if (state.settings) drawSettings(ictx);

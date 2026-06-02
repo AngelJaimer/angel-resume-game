@@ -4,16 +4,12 @@ import type { RGB } from '../art/palette';
 // Build the SCUMM sentence line from the current verb and what's under the cursor.
 export function buildSentence(state: any): string {
   const h = state.hover;
-  if (state.selectedItem) {
-    const base = `Give ${state.selectedItem.name}`;
-    return h && h.hotspot ? `${base} to ${h.hotspot.name}` : base;
-  }
-  if (!h) return state.verb;
+  if (!h) return '';
   if (h.exit) return `Go to ${h.exit.name}`;
-  if (h.hotspot) return `${state.verb} ${h.hotspot.name}`;
-  if (h.panelVerb) return h.panelVerb;
-  if (h.walkable) return 'Walk to';
-  return state.verb;
+  if (h.npc) return `Talk to ${h.npc.name}`;
+  if (h.hotspot) return `Look at ${h.hotspot.name}`;
+  if (h.walkable) return 'Walk here';
+  return '';
 }
 
 export function wrapText(s: string, maxW: number): string[] {
