@@ -8,6 +8,7 @@ export interface Hotspot {
   look: string;
   url?: string;             // external link (e.g. a case study) shown as a clickable HTML pill
   linkLabel?: string;       // label for that pill (defaults to the hotspot name)
+  links?: { url: string; label: string }[]; // multiple links (e.g. case study + company site)
   responses?: Record<string, string>;
   pickup?: { id: string; name: string };
   pickupIf?: string;        // only collectable once this flag is set

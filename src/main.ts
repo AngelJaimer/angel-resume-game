@@ -3,14 +3,13 @@ import { drawActor } from './art/actor';
 import { drawPanel, hitPanel, PANEL_Y } from './scumm/ui';
 import { buildSentence, wrapText, drawSpeech, drawSpeechLines } from './scumm/interact';
 import { currentOptions, drawDialoguePanel, hitDialogueOption } from './scumm/dialogue';
-import { DEFAULT_RESPONSES } from './scumm/verbs';
 import { makeItem } from './content/items';
 import { drawText, textWidth } from './art/font';
 import { P, css, type RGB } from './art/palette';
 import * as audio from './audio/engine';
 import { buildTitleScene } from './screens/title';
 import { CONFIG } from './config';
-import { initLinks, showGameUI, setCaseLink, clearCaseLink, contact } from './ui/links';
+import { initLinks, showGameUI, setLinks, clearLinks, contact } from './ui/links';
 
 const W = 320, H = 200, PLAY_H = 144;
 
@@ -100,6 +99,7 @@ const state: any = {
   dialogue: null,
   selectedItem: null,
   ending: null,
+  info: null,
   now: 0,
   screen: 'title',
   settings: false,
@@ -134,6 +134,7 @@ display.addEventListener('pointermove', (e) => {
   if (state.screen === 'title') return;
   const { mx, my } = toInternal(e);
   if (state.about) return;
+  if (state.info) return;
   if (state.settings) { settingsHoverAt(mx, my); return; }
   if (state.ending) return;
   if (state.dialogue) {
@@ -156,6 +157,7 @@ display.addEventListener('pointerdown', (e) => {
   e.preventDefault();
   if (state.screen === 'title') { startGame(); return; }
   const { mx, my } = toInternal(e);
+  if (state.info) { state.info = null; return; }
   if (state.ending) {
     if (state.ending.goto && state.now - state.ending.since > 1500) {
       const go = state.ending.goto;
@@ -208,9 +210,9 @@ function onClick(mx: number, my: number) {
   const ex = hitExitR(mx, my);
   if (ex) { goTo(ex.walkTo, { kind: 'exit', exit: ex }); return; }
   const npc = hitNPCR(mx, my);
-  if (npc) { goTo(npc.walkTo, state.selectedItem ? { kind: 'give', npc, item: state.selectedItem } : { kind: 'npc', verb: state.verb, npc }); return; }
+  if (npc) { goTo(npc.walkTo, state.selectedItem ? { kind: 'give', npc, item: state.selectedItem } : { kind: 'npc', verb: 'Talk to', npc }); return; }
   const hs = hitHotspotR(mx, my);
-  if (hs) { state.selectedItem = null; goTo(hs.walkTo, { kind: 'hs', verb: state.verb, hs }); return; }
+  if (hs) { state.selectedItem = null; goTo(hs.walkTo, { kind: 'hs', verb: 'Look at', hs }); return; }
   state.selectedItem = null;
   goTo(clampWalkR(mx, my), null);
 }
@@ -236,44 +238,24 @@ function npcSays(npc: any, text: string) {
   state.npcSpeech = { lines: wrapText(text, 190), until: state.now + Math.max(1800, text.length * 55), color: npc.color, x: npc.feet.x, headY: npc.feet.y - 52 };
 }
 
-function runAction(verb: string, hs: any) {
-  state.guy.facing = hs.x + hs.w / 2 < state.guy.x ? 'left' : 'right';
-  let text: string;
-  if (hs.needs && (verb === 'Open' || verb === 'Use')) {
-    if (hs.needs.every((id: string) => hasItem(id))) {
-      hs.needs.forEach((id: string) => removeItem(id));
-      if (hs.flag) state.flags[hs.flag] = true;
-      audio.sfx('win');
-      if (hs.card) state.ending = { since: state.now, lines: hs.card, goto: hs.goto };
-      text = hs.responses?.[verb] || hs.responses?.Open || 'It opens.';
-    } else {
-      text = hs.needsBlocked || 'I still need something for this.';
-    }
-  } else if (verb === 'Pick up' && hs.pickup) {
-    if (hs.pickupIf && !state.flags[hs.pickupIf]) {
-      text = hs.pickupBlocked || "I can't take that right now.";
-    } else {
-      addItem(hs.pickup.id);
-      audio.sfx('pickup');
-      state.flags['took_' + hs.pickup.id] = true;
-      const idx = currentRoom.hotspots.indexOf(hs);
-      if (idx >= 0) currentRoom.hotspots.splice(idx, 1);
-      text = hs.responses?.['Pick up'] || 'Taken.';
-    }
-  } else if (verb === 'Look at') {
-    text = hs.look || DEFAULT_RESPONSES['Look at'];
-  } else {
-    text = hs.responses?.[verb] || DEFAULT_RESPONSES[verb] || 'Hmm.';
-  }
-  say(text);
-  if (hs.url) setCaseLink(hs.url, hs.linkLabel || 'Read the case study');
+function showExhibitLinks(hs: any) {
+  if (hs.links && hs.links.length) setLinks(hs.links);
+  else if (hs.url) setLinks([{ url: hs.url, label: hs.linkLabel || 'Read the case study' }]);
+  else clearLinks();
 }
 
-function handleNPC(verb: string, npc: any) {
+function runAction(_verb: string, hs: any) {
+  state.guy.facing = hs.x + hs.w / 2 < state.guy.x ? 'left' : 'right';
+  // Every exhibit simply shows its info in a readable panel — no verb to pick.
+  state.info = { title: hs.name, lines: wrapText(hs.look, 264), since: state.now };
+  showExhibitLinks(hs);
+  audio.sfx('ui');
+}
+
+function handleNPC(_verb: string, npc: any) {
   state.guy.facing = npc.feet.x < state.guy.x ? 'left' : 'right';
-  if (verb === 'Talk to' && npc.dialogue) openDialogue(npc);
-  else if (verb === 'Look at') say(npc.look);
-  else say(DEFAULT_RESPONSES[verb] || "That won't help.");
+  if (npc.dialogue) openDialogue(npc);
+  else say(npc.look);
 }
 
 function giveItem(npc: any, item: any) {
@@ -318,7 +300,7 @@ function selectOption(i: number) {
 
 // ---------------- rooms ----------------
 function switchRoom(toId: string, entry: any) {
-  clearCaseLink(); contact(false);
+  clearLinks(); contact(false);
   currentRoom = ROOMS[toId];
   if (!bgCache[toId]) bgCache[toId] = currentRoom.build();
   applyBgImage(currentRoom);
@@ -390,6 +372,20 @@ function vignette(ctx: CanvasRenderingContext2D) {
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, W, PLAY_H);
 }
+function drawInfo(ctx: CanvasRenderingContext2D) {
+  const x = 16, y = 14, w = 288, h = 124;
+  ctx.fillStyle = 'rgba(8,6,12,0.62)'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = css(P.panelWood); ctx.fillRect(x, y, w, h);
+  ctx.fillStyle = css(P.amberLit); ctx.fillRect(x, y, w, 1); ctx.fillRect(x, y, 1, h);
+  ctx.fillStyle = css(P.black); ctx.fillRect(x, y + h - 1, w, 1); ctx.fillRect(x + w - 1, y, 1, h);
+  drawText(ctx, (state.info.title || '').toUpperCase(), x + 10, y + 7, P.verbHot, 1, P.black, 1);
+  ctx.fillStyle = css(P.amberDark); ctx.fillRect(x + 10, y + 17, w - 20, 1);
+  let yy = y + 22;
+  for (const ln of state.info.lines) { drawText(ctx, ln, x + 10, yy, P.inkLight, 1, P.black, 1); yy += 9; }
+  const hint = 'click to close';
+  drawText(ctx, hint, x + w - textWidth(hint, 1, 1) - 9, y + h - 11, P.verbIdle, 1, P.black, 1);
+}
+
 function drawEnding(ctx: CanvasRenderingContext2D) {
   const dt = state.now - state.ending.since;
   const a = Math.min(0.82, (dt / 1600) * 0.82);
@@ -580,7 +576,7 @@ function frame(ts: number) {
     return;
   }
 
-  if (!state.ending && !state.settings) update(dt);
+  if (!state.ending && !state.settings && !state.info) update(dt);
 
   ictx.fillStyle = css(P.black);
   ictx.fillRect(0, 0, W, H);
@@ -608,6 +604,7 @@ function frame(ts: number) {
   else drawPanel(ictx, buildSentence(state), state.verb, state.inventory, state.selectedItem ? state.selectedItem.id : null);
   drawMusicIcon(ictx);
   drawGearIcon(ictx);
+  if (state.info) drawInfo(ictx);
   if (state.settings) drawSettings(ictx);
   if (state.about) drawAbout(ictx);
   if (state.ending) drawEnding(ictx);

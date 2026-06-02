@@ -29,12 +29,17 @@ export function buildScaleupsScene(): HTMLCanvasElement {
 }
 
 const HOTSPOTS: Hotspot[] = [
-  { id: 'revolut', name: 'Revolut', x: 44, y: 28, w: 64, h: 44, walkTo: { x: 72, y: 138 }, url: 'https://angeljaime.com/case-study/revolut',
-    look: 'Revolut, London. Senior Product Owner for Revolut Business. I launched and scaled a Rewards platform across web, iOS and Android, shipped cross-product referrals (consumer to business), and created Revolut Points, later rolled out to Consumer. Two teams, twenty-plus people.' },
+  { id: 'revolut', name: 'Revolut', x: 44, y: 28, w: 64, h: 44, walkTo: { x: 72, y: 138 },
+    links: [
+      { url: 'https://angeljaime.com/case-study/revolut', label: 'Read the case study' },
+      { url: 'https://www.revolut.com', label: 'Visit revolut.com' },
+    ],
+    look: 'Revolut - a fintech super-app with tens of millions of customers worldwide. As Senior Product Owner for Revolut Business I launched and scaled a Rewards platform across web, iOS and Android, shipped cross-product referrals (consumer to business), and created Revolut Points, later rolled out to Consumer. Two teams, 20-plus people.' },
   { id: 'hopper', name: 'Hopper', x: 120, y: 28, w: 64, h: 44, walkTo: { x: 148, y: 138 },
-    look: 'Hopper, NY and LA. Senior PM, International Expansion. I led international Hotels and Fintech: doubled conversion on some fintech products, launched a travel-rewards program, and powered partnerships putting Hopper inventory inside NuBank, SMCC and Lloyds.' },
+    links: [{ url: 'https://www.hopper.com', label: 'Visit hopper.com' }],
+    look: 'Hopper - a travel app known for price prediction and travel fintech. As Senior PM for International Expansion I led international Hotels and Fintech: doubled conversion on some fintech products, launched a travel-rewards program, and powered partnerships putting Hopper inventory inside NuBank, SMCC and Lloyds.' },
   { id: 'chart', name: 'the growth chart', x: 206, y: 26, w: 70, h: 46, walkTo: { x: 240, y: 138 },
-    look: 'Up and to the right. Scale-up product work: move the metric, keep the trust, do it across three platforms at once.' },
+    look: 'Up and to the right. Scale-up product work: move the metric, keep the trust, and ship across three platforms at once.' },
 ];
 
 const NPCS: NPC[] = [

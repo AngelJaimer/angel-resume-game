@@ -27,8 +27,6 @@ export const CONFIG = {
     'Product leader, 10 years plus. Booking,',
     'Just Eat, Revolut, Hopper, Yayzy, Engine.',
     '',
-    'Made with Claude Code and pointclick-kit.',
-    '',
     '(c) 2026 Angel Jaime.',
     'angeljaime.com',
     'linkedin.com/in/angel-jaime-3054b632',

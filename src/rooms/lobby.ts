@@ -35,12 +35,16 @@ export function buildLobbyScene(): HTMLCanvasElement {
 }
 
 const HOTSPOTS: Hotspot[] = [
-  { id: 'platform', name: 'the AI Platform', x: 38, y: 30, w: 50, h: 40, walkTo: { x: 63, y: 138 }, url: 'https://angeljaime.com/case-study/ai-services',
-    look: 'I built Engine\'s central AI platform, so any product team can ship LLM features in days instead of months. It now powers 6 or more AI products. The trick was treating those teams as customers.' },
+  { id: 'platform', name: 'the AI Platform', x: 38, y: 30, w: 50, h: 40, walkTo: { x: 63, y: 138 },
+    links: [
+      { url: 'https://angeljaime.com/case-study/ai-services', label: 'Read the case study' },
+      { url: 'https://www.engine.com', label: 'Visit engine.com' },
+    ],
+    look: 'Engine is a fast-growing US corporate-travel platform serving more than a million business travelers. As Staff PM for AI, I built its central AI platform - so any product team can ship LLM features in days, not months. It now powers six or more AI products. The trick: treat those teams as customers.' },
   { id: 'search', name: 'Smart Search', x: 100, y: 30, w: 50, h: 40, walkTo: { x: 125, y: 138 }, url: 'https://angeljaime.com/case-study/eva',
-    look: 'I rebuilt our AI hotel-search assistant. Unanswered questions dropped about 6x, answer quality jumped, and replies stayed fast. The lesson: the context you feed a model matters more than the model.' },
+    look: 'I rebuilt Engine\'s AI hotel-search assistant. Unanswered questions dropped about 6x and answer quality jumped, while replies stayed fast. The lesson: the context you feed a model matters more than the model itself.' },
   { id: 'ml', name: 'ML Personalization', x: 162, y: 30, w: 50, h: 40, walkTo: { x: 187, y: 138 }, url: 'https://angeljaime.com/case-study/personalization',
-    look: 'I stood up real-time ML personalization and the infrastructure behind it, so data scientists iterate in days and travelers see stays that fit. In ML products, the infrastructure IS the product.' },
+    look: 'I stood up real-time ML personalization and the infrastructure behind it - so data scientists iterate in days, and travelers see stays that fit. In ML products, the infrastructure IS the product.' },
   { id: 'award', name: 'the award', x: 224, y: 34, w: 48, h: 30, walkTo: { x: 248, y: 138 }, url: 'https://angeljaime.com/case-study/eva', linkLabel: 'Read about EVA',
     look: 'An AI assistant built on that platform won Salesforce\'s Customer Success Award at Dreamforce 2025, on stage in front of tens of thousands of people.' },
 ];

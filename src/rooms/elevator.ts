@@ -43,14 +43,12 @@ export function buildElevatorScene(): HTMLCanvasElement {
 // A locked-roof message sits under the R button until `seen_all` unlocks the
 // real exit (exits are hit-tested before hotspots, so the exit wins once active).
 const HOTSPOTS: Hotspot[] = [
-  { id: 'rooftopLocked', name: 'the Rooftop button', x: 248, y: 24, w: 58, h: 13, walkTo: { x: 214, y: 138 },
-    look: 'The roof is locked until you have toured the whole building. Keep going: Big Tech, Scale-ups, Startup, Education, and the street outside.' },
-  { id: 'panel', name: 'the panel', x: 244, y: 18, w: 68, h: 104, walkTo: { x: 214, y: 138 },
-    look: 'A polished brass call panel. Pick a floor and the car hums into motion.' },
+  { id: 'panel', name: 'the call panel', x: 244, y: 18, w: 68, h: 104, walkTo: { x: 214, y: 138 },
+    look: 'A polished brass call panel. Pick any floor - the car hums into motion. The roof is always open: that is where you will find Angel.' },
 ];
 
 const EXITS: Exit[] = [
-  { id: 'toRooftop', name: 'the Rooftop', x: 248, y: 24, w: 58, h: 13, walkTo: { x: 214, y: 138 }, to: 'rooftop', entry: { x: 46, y: 134 }, arrow: 'up', showIf: 'seen_all' },
+  { id: 'toRooftop', name: 'the Rooftop', x: 248, y: 24, w: 58, h: 13, walkTo: { x: 214, y: 138 }, to: 'rooftop', entry: { x: 46, y: 134 }, arrow: 'up' },
   { id: 'toScaleups', name: 'the Scale-ups floor', x: 248, y: 40, w: 58, h: 13, walkTo: { x: 214, y: 138 }, to: 'scaleups', entry: { x: 46, y: 136 }, arrow: 'right' },
   { id: 'toStartup', name: 'the Startup floor', x: 248, y: 56, w: 58, h: 13, walkTo: { x: 214, y: 138 }, to: 'startup', entry: { x: 46, y: 136 }, arrow: 'right' },
   { id: 'toBigtech', name: 'the Big Tech floor', x: 248, y: 72, w: 58, h: 13, walkTo: { x: 214, y: 138 }, to: 'bigtech', entry: { x: 46, y: 136 }, arrow: 'right' },

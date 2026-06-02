@@ -15,24 +15,32 @@ export function overview(show: boolean) {
   if (m) m.style.display = show ? 'flex' : 'none';
 }
 
-// Show/hide the persistent top-right bar (site link + Overview button).
+// Persistent top-right bar (site link + Overview button).
 export function showGameUI(on: boolean) {
   const u = el('ui');
   if (u) u.style.display = on ? 'flex' : 'none';
   if (!on) contact(false);
 }
 
-// A contextual "case study" link for the exhibit currently being looked at.
-export function setCaseLink(url: string, label: string) {
-  const a = el('uiCase') as HTMLAnchorElement | null;
-  if (!a) return;
-  a.href = url;
-  a.textContent = label + '  ↗';
-  a.style.display = 'inline-flex';
+// Contextual external links for the exhibit being viewed (case study + company site).
+export function setLinks(links: Array<{ url: string; label: string }>) {
+  const box = el('uiLinks');
+  if (!box) return;
+  box.innerHTML = '';
+  for (const l of links) {
+    const a = document.createElement('a');
+    a.className = 'pill pillhot';
+    a.href = l.url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.textContent = l.label + '  ↗';
+    box.appendChild(a);
+  }
+  box.style.display = links.length ? 'flex' : 'none';
 }
-export function clearCaseLink() {
-  const a = el('uiCase');
-  if (a) a.style.display = 'none';
+export function clearLinks() {
+  const b = el('uiLinks');
+  if (b) { b.innerHTML = ''; b.style.display = 'none'; }
 }
 
 // The finale contact links (site / email / LinkedIn).

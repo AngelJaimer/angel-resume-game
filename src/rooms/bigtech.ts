@@ -24,12 +24,18 @@ export function buildBigtechScene(): HTMLCanvasElement {
 }
 
 const HOTSPOTS: Hotspot[] = [
-  { id: 'booking', name: 'Booking.com', x: 40, y: 28, w: 60, h: 44, walkTo: { x: 66, y: 138 }, url: 'https://angeljaime.com/case-study/pulse',
-    look: 'Booking.com, Amsterdam. From operations to Product Owner. I built Pulse, the partner app, from a sketch to over a million users at 4.5 stars. Later I validated a brand-new Transport vertical with the CPO and launched Booking\'s first public-transport product.' },
+  { id: 'booking', name: 'Booking.com', x: 40, y: 28, w: 60, h: 44, walkTo: { x: 66, y: 138 },
+    links: [
+      { url: 'https://angeljaime.com/case-study/pulse', label: 'Read the case study' },
+      { url: 'https://www.booking.com', label: 'Visit booking.com' },
+    ],
+    look: "Booking.com - the world's largest travel platform (part of Booking Holdings, about 20,000 people). I went from operations to Product Owner, built Pulse, the partner app, from a sketch to over a million users at 4.5 stars, then validated a new Transport vertical with the CPO and launched Booking's first public-transport product." },
   { id: 'justeat', name: 'Just Eat', x: 116, y: 28, w: 56, h: 44, walkTo: { x: 142, y: 138 },
-    look: 'Just Eat, London. Senior PM owning Search across web and apps. I ran ranking and the search experience, drove an experimentation culture of hundreds of A/B tests, and co-authored a published paper on the ranking algorithm.' },
+    links: [{ url: 'https://www.justeattakeaway.com', label: 'Visit justeattakeaway.com' }],
+    look: "Just Eat Takeaway - one of the world's largest food-delivery groups, across more than 20 countries. As Senior PM I owned Search across web and apps: ranking, algorithms, UX. I drove an experimentation culture of hundreds of A/B tests and co-authored a published paper on the ranking algorithm." },
   { id: 'philips', name: 'Philips', x: 188, y: 28, w: 56, h: 44, walkTo: { x: 214, y: 138 },
-    look: 'Philips, Amsterdam. Senior Product Owner. I led two full-stack teams, introduced Discovery and the first B2B e-commerce experiments, and redesigned a core SAP customer journey, lifting sales and satisfaction.' },
+    links: [{ url: 'https://www.philips.com', label: 'Visit philips.com' }],
+    look: 'Philips - a global health-technology company (about 70,000 people), Amsterdam. As Senior Product Owner I led two full-stack teams, introduced Discovery and the first B2B e-commerce experiments, and redesigned a core SAP customer journey - lifting sales and satisfaction.' },
 ];
 
 const NPCS: NPC[] = [
