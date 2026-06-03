@@ -301,7 +301,7 @@ function selectOption(i: number) {
       [
         { url: 'https://angeljaime.com', label: 'angeljaime.com' },
         { url: CV_URL, label: 'Download CV (PDF)' },
-        { url: 'mailto:angeljaimer@gmail.com', label: 'Email' },
+        { url: 'mailto:hello@angeljaime.com', label: 'Email' },
         { url: 'https://www.linkedin.com/in/angel-jaime-3054b632/', label: 'LinkedIn' },
       ]);
     state.dialogue = null;
