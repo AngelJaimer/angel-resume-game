@@ -73,4 +73,5 @@ export interface Room {
   walk: { minX: number; maxX: number; minY: number; maxY: number };
   start: { x: number; y: number };
   onEnter?: (state: any) => void;          // runs once when you enter the room (e.g. a cutscene line)
+  greet?: string;                          // NPC id to auto-open on first entry (the welcome greeting)
 }

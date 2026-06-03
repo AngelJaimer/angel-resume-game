@@ -16,6 +16,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
     <title>Angel Jaime · The Playable Résumé</title>
+    <meta name="description" content="A point-and-click résumé — play a recruiter touring Angel Jaime's product career, floor by floor. 13+ years in product across AI, fintech, travel and marketplaces." />
+    <!-- social share preview (Open Graph + Twitter) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://angeljaimer.github.io/angel-resume-game/" />
+    <meta property="og:title" content="Angel Jaime — The Playable Résumé" />
+    <meta property="og:description" content="Play a recruiter touring Angel Jaime's product career, floor by floor. 13+ years in product across AI, fintech, travel and marketplaces." />
+    <meta property="og:image" content="https://angeljaimer.github.io/angel-resume-game/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The Playable Résumé — a dusk-lit building skyline" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Angel Jaime — The Playable Résumé" />
+    <meta name="twitter:description" content="A point-and-click résumé. Tour a product career across AI, fintech, travel and marketplaces." />
+    <meta name="twitter:image" content="https://angeljaimer.github.io/angel-resume-game/og.png" />
     <style>
       html, body {
         margin: 0; padding: 0; height: 100%; background: #07070a; overflow: hidden;
@@ -90,6 +104,20 @@
       #exhibit .links a:first-child { background: #d4a800; color: #171412; }
       #exhibit .links a:hover { opacity: 0.9; }
       #exhibit .x { position: absolute; top: 10px; right: 14px; border: none; background: none; font-size: 22px; cursor: pointer; color: #9a8c70; line-height: 1; }
+      /* short landscape phones: tighten the modals so the action links stay in view */
+      @media (max-height: 460px) {
+        #overview, #exhibit { padding: 8px; }
+        #overview .card { max-height: 95vh; padding: 16px 20px 14px; }
+        #overview h1 { font-size: 21px; }
+        #overview .sub { font-size: 10.5px; margin-bottom: 9px; }
+        #overview p { font-size: 12px; line-height: 1.4; margin-bottom: 8px; }
+        #overview ul { margin-bottom: 9px; }
+        #overview li { font-size: 11.5px; line-height: 1.35; margin-bottom: 3px; }
+        #exhibit .card { max-height: 95vh; padding: 16px 20px 14px; }
+        #exhibit h2 { font-size: 18px; margin-bottom: 7px; }
+        #exhibit p { font-size: 12.5px; line-height: 1.45; margin-bottom: 12px; }
+        #overview .links a, #exhibit .links a { padding: 8px 12px; font-size: 12px; }
+      }
     </style>
   </head>
   <body>
@@ -133,6 +161,7 @@
         </ul>
         <div class="links">
           <a class="amber" href="https://angeljaime.com" target="_blank" rel="noopener">Visit angeljaime.com ↗</a>
+          <a href="Angel-Jaime-CV.pdf" target="_blank" rel="noopener" download>Download CV (PDF)</a>
           <a href="https://www.linkedin.com/in/angel-jaime-3054b632/" target="_blank" rel="noopener">LinkedIn</a>
           <a href="mailto:angeljaimer@gmail.com">Email</a>
         </div>

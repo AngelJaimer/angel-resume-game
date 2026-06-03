@@ -73,4 +73,5 @@ export const LOBBY: Room = {
   walk: { minX: 16, maxX: 300, minY: 120, maxY: 140 },
   start: { x: 96, y: 136 },
   onEnter: (state) => markSeen(state, 'lobby'),
+  greet: 'concierge',
 };

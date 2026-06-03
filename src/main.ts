@@ -13,6 +13,9 @@ import { initLinks, showGameUI, showExhibit, hideExhibit } from './ui/links';
 
 const W = 320, H = 200, PLAY_H = 144;
 
+// Public path to the downloadable CV (works in dev '/' and on Pages '/angel-resume-game/').
+const CV_URL = import.meta.env.BASE_URL + 'Angel-Jaime-CV.pdf';
+
 const display = document.getElementById('game') as HTMLCanvasElement;
 display.width = W;
 display.height = H;
@@ -112,6 +115,7 @@ const state: any = {
 // The initial room isn't entered via switchRoom, so fire its onEnter once here
 // (marks the lobby as "seen" for the finale-unlock logic).
 currentRoom.onEnter?.(state);
+maybeGreet();
 initLinks();
 
 // ---------------- generic room hit-tests ----------------
@@ -268,6 +272,18 @@ function dlgOptions() {
   const d = state.dialogue;
   return d ? currentOptions(d.npc.dialogue, d.node, state.flags, state.used, d.npc.id) : [];
 }
+// Auto-greeting: the first time you enter a room that defines `greet`, that NPC
+// opens their dialogue so you instantly know what to do. Fires once per save.
+function maybeGreet() {
+  const id = (currentRoom as any).greet;
+  if (!id) return;
+  const key = 'met_' + currentRoom.id;
+  if (state.flags[key]) return;
+  const npc = currentRoom.npcs.find((n: any) => n.id === id);
+  if (!npc || !npc.dialogue) return;
+  state.flags[key] = true;
+  openDialogue(npc);
+}
 function openDialogue(npc: any) {
   state.dialogue = { npc, node: 'start', lines: wrapText(npc.dialogue.start.npc, 190) };
   state.speech = null; state.npcSpeech = null;
@@ -284,6 +300,7 @@ function selectOption(i: number) {
       'Angel Jaime — Product Leader. AI, Fintech, Travel, Marketplaces. 13+ years in product, 15+ in tech, across four countries. Thanks for touring the building.',
       [
         { url: 'https://angeljaime.com', label: 'angeljaime.com' },
+        { url: CV_URL, label: 'Download CV (PDF)' },
         { url: 'mailto:angeljaimer@gmail.com', label: 'Email' },
         { url: 'https://www.linkedin.com/in/angel-jaime-3054b632/', label: 'LinkedIn' },
       ]);
@@ -310,6 +327,7 @@ function switchRoom(toId: string, entry: any) {
   state.guy.moving = false; state.target = null; state.pending = null;
   state.dialogue = null; state.speech = null; state.npcSpeech = null; state.selectedItem = null;
   currentRoom.onEnter?.(state);
+  maybeGreet();
   saveGame(true);
 }
 
